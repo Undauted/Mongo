@@ -1,4 +1,4 @@
-package com.example.nosqldemo.repository;
+/*package com.example.nosqldemo.repository;
 
 import static org.junit.Assert.assertTrue;
 
@@ -46,3 +46,4 @@ public class CarManagerTest {
 	}
 
 }
+*/
