@@ -437,12 +437,15 @@ public class Testy {
 		List<Monitor> monit = managerMonitor.getAllMonitory();
 		assertEquals(monit.size(),2);
 
-		Monitor mo = monit.get(0);
+		
 		
 		monitor.setNazwa(rodzaj1);
 		monitor.setRodzaj(nazwa1);
 
 		managerMonitor.updateMonitor(monitor);
+		
+		List<Monitor> monit1 = managerMonitor.getAllMonitory();
+		Monitor mo = monit1.get(0);
 		
 		assertEquals(rodzaj1,mo.getNazwa());
 		assertEquals(nazwa1,mo.getRodzaj());
