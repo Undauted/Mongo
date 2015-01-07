@@ -65,7 +65,7 @@ public class Testy {
 		monitor.setWaga(waga1);
 		
 		List<Monitor> monit = managerMonitor.getAllMonitory();
-		assertNull(monit.size());
+		assertEquals(null, managerMonitor.getMonitorById(monitor.getId()));
 		
 		
 		managerMonitor.addMonitor(monitor);
@@ -141,7 +141,7 @@ public class Testy {
 		managerMonitor.deleteMonitor(monitor);
 		
 		List<Monitor> monit1 = managerMonitor.getAllMonitory();
-		assertNull(monit1.size());
+		assertEquals(null,managerMonitor.getMonitorById(monitor.getId()));
 		
 		assertEquals(monit.size(), monit1.size()+1);
 		
@@ -195,8 +195,6 @@ public class Testy {
 	@Test
 	public void deleteAllMonitorCheck() {
 		
-		List<Monitor> monit = managerMonitor.getAllMonitory();
-		
 		
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(nazwa1);
@@ -210,6 +208,7 @@ public class Testy {
 		monitor1.setPrzekatna(przekatna2);
 		monitor1.setWaga(waga2);
 	
+		List<Monitor> monit = managerMonitor.getAllMonitory();
 		managerMonitor.addMonitor(monitor);
 		managerMonitor.addMonitor(monitor1);
 	
@@ -218,8 +217,8 @@ public class Testy {
 		
 		managerMonitor.deleteAllMonitory();
 		
-		List<Monitor> monit1 = managerMonitor.getAllMonitory();
-		assertNull(monit1.size());
+		assertEquals(null,managerMonitor.getMonitorById(monitor.getId()));
+		assertEquals(null,managerMonitor.getMonitorById(monitor1.getId()));
 		
 		managerMonitor.deleteAllMonitory();
 	}
@@ -273,7 +272,7 @@ public class Testy {
 		
 		List<Firma> fir1 = managerFirmy.getAllFirma();
 		assertEquals(fir1.size(),0);
-		assertNull(fir1.size());
+		
 		
 		managerFirmy.deleteAllFirma();
 	}
@@ -295,9 +294,7 @@ public class Testy {
 		managerMonitor.deleteMonitor(monitor);
 		assertNull(managerMonitor.getMonitorById(monitor.getId()));
 		
-		List<Monitor> monit = managerMonitor.getAllMonitory();
-		
-		assertNull(monit.size());
+		assertEquals(null,managerMonitor.getMonitorById(monitor.getId()));
 		
 		managerMonitor.deleteAllMonitory();
 		
@@ -347,7 +344,6 @@ public class Testy {
 	public void checkfindAllMonitor() {
 	
 		List<Monitor> monit = managerMonitor.getAllMonitory();
-		assertNull(monit.size());
 		assertEquals(0,monit.size());
 		
 		Monitor monitor = new Monitor();
