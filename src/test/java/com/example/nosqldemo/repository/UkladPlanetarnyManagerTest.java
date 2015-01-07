@@ -14,19 +14,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.nosqldemo.domain.Car;
 import com.example.nosqldemo.domain.Person;
-import com.example.nosqldemo.service.PlanetaManager;
-import com.example.nosqldemo.service.UkladPlanetarnyManager;
-import com.example.nosqldemo.domain.Planeta;
-import com.example.nosqldemo.domain.UkladPlanetarny;
+import com.example.nosqldemo.service.MonitorManager;
+import com.example.nosqldemo.service.FirmaManager;
+import com.example.nosqldemo.domain.Monitor;
+import com.example.nosqldemo.domain.Firma;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/beans.xml" })
 public class UkladPlanetarnyManagerTest {
 	
 	@Autowired
-	PlanetaManager managerPlanety;
+	MonitorManager managerPlanety;
 	@Autowired
-	UkladPlanetarnyManager managerUkladu;
+	FirmaManager managerUkladu;
 	
 	//Planeta
 	private final String nazwa1 = "Mars";
@@ -54,31 +54,31 @@ public class UkladPlanetarnyManagerTest {
 	@Test
 	public void checkAdding(){
 
-		Planeta planeta1 = new Planeta();
+		Monitor planeta1 = new Monitor();
 		planeta1.setNazwa(nazwa2);
 		planeta1.setSrednica(srednica2);
 		planeta1.setIl_ks(il_ks2);
 		managerPlanety.addPlaneta(planeta1);
-		List<Planeta> planetyTab = new ArrayList<Planeta>();
+		List<Monitor> planetyTab = new ArrayList<Monitor>();
 		planetyTab.add(planeta1);
 		
-		UkladPlanetarny uklad = new UkladPlanetarny();
+		Firma uklad = new Firma();
 		uklad.setNazwaUkladu(nazwaU1);
 		uklad.setLiczbaObiektow(liczbaObiektow1);
 		uklad.setPlanety(planetyTab);
 		
-		List<UkladPlanetarny> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowprzedDodaniem = listaUkladow.size();
 		//System.out.println(liczbaUkladowprzedDodaniem);
 		
 		managerUkladu.addNewUkladPlanetarny(uklad);
 		
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowpoDodaniu = listaUkladow2.size();
 		//System.out.println(liczbaUkladowpoDodaniu);
 		
 		ObjectId id = uklad.getId();
-		UkladPlanetarny uk = managerUkladu.getUkladPlanetarnyById(id);
+		Firma uk = managerUkladu.getUkladPlanetarnyById(id);
 		
 		assertEquals(uk.getNazwaUkladu(), uklad.getNazwaUkladu());
 		assertEquals(uk.getLiczbaObiektow(), uklad.getLiczbaObiektow());
@@ -97,35 +97,35 @@ public class UkladPlanetarnyManagerTest {
 	@Test
 	public void deleteUkladCheck() {
 		
-		Planeta planeta1 = new Planeta();
+		Monitor planeta1 = new Monitor();
 		planeta1.setNazwa(nazwa1);
 		planeta1.setSrednica(srednica1);
 		planeta1.setIl_ks(il_ks1);
 		managerPlanety.addPlaneta(planeta1);
 		
-		Planeta planeta2 = new Planeta();
+		Monitor planeta2 = new Monitor();
 		planeta2.setNazwa(nazwa1);
 		planeta2.setSrednica(srednica1);
 		planeta2.setIl_ks(il_ks1);
 		managerPlanety.addPlaneta(planeta2);
 		
-		List<Planeta> planetyTab = new ArrayList<Planeta>();
+		List<Monitor> planetyTab = new ArrayList<Monitor>();
 		planetyTab.add(planeta1);
 		planetyTab.add(planeta2);
 		
-		UkladPlanetarny uklad = new UkladPlanetarny();
+		Firma uklad = new Firma();
 		uklad.setNazwaUkladu(nazwaU1);
 		uklad.setLiczbaObiektow(liczbaObiektow1);
 		uklad.setPlanety(planetyTab);
 		managerUkladu.addNewUkladPlanetarny(uklad);
 		
-		List<UkladPlanetarny> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowprzedUsunieciem = listaUkladow.size();
 		
 		ObjectId idUkladu = uklad.getId();
 		managerUkladu.deleteUkladPlanetarny(uklad);
 		
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowpoUsunieciu = listaUkladow2.size();
 		
 		assertEquals(liczbaUkladowprzedUsunieciem, liczbaUkladowpoUsunieciu+1);
@@ -140,15 +140,15 @@ public class UkladPlanetarnyManagerTest {
 	
 	@Test
 	public void deleteAllUkladyCheck() {
-		List<UkladPlanetarny> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowPrzedDodaniem = listaUkladow.size();
 		
-		Planeta planeta1 = new Planeta();
+		Monitor planeta1 = new Monitor();
 		planeta1.setNazwa(nazwa2);
 		planeta1.setSrednica(srednica2);
 		planeta1.setIl_ks(il_ks2);
 	
-		Planeta planeta2 = new Planeta();
+		Monitor planeta2 = new Monitor();
 		planeta2.setNazwa(nazwa2);
 		planeta2.setSrednica(srednica2);
 		planeta2.setIl_ks(il_ks2);
@@ -156,19 +156,19 @@ public class UkladPlanetarnyManagerTest {
 		managerPlanety.addPlaneta(planeta1);
 		managerPlanety.addPlaneta(planeta2);
 		
-		List<Planeta> planetyTab1 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab1 = new ArrayList<Monitor>();
 		planetyTab1.add(planeta1);
 		
-		List<Planeta> planetyTab2 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab2 = new ArrayList<Monitor>();
 		planetyTab1.add(planeta2);
 		
-		UkladPlanetarny uklad1 = new UkladPlanetarny();
+		Firma uklad1 = new Firma();
 		uklad1.setNazwaUkladu(nazwaU1);
 		uklad1.setLiczbaObiektow(liczbaObiektow1);
 		uklad1.setPlanety(planetyTab1);
 		managerUkladu.addNewUkladPlanetarny(uklad1);
 		
-		UkladPlanetarny uklad2 = new UkladPlanetarny();
+		Firma uklad2 = new Firma();
 		uklad2.setNazwaUkladu(nazwaU1);
 		uklad2.setLiczbaObiektow(liczbaObiektow1);
 		uklad2.setPlanety(planetyTab2);
@@ -176,14 +176,14 @@ public class UkladPlanetarnyManagerTest {
 	
 		assertNotNull(listaUkladow);
 		
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowPoDodaniu = listaUkladow2.size();
 	
 		assertEquals(liczbaUkladowPoDodaniu, liczbaUkladowPrzedDodaniem+2);
 		
 		managerUkladu.deleteAllUkladyPlanetarne();
 		
-		List<UkladPlanetarny> listaUkladow3 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow3 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowpoUsunieciu = listaUkladow3.size();
 		assertEquals(0, liczbaUkladowpoUsunieciu);
 	}
@@ -192,19 +192,19 @@ public class UkladPlanetarnyManagerTest {
 	@Test
 	public void findUkladCheck() {
 		
-		List<UkladPlanetarny> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowprzedDodaniem = listaUkladow.size();
 		
-		Planeta planeta = new Planeta();
+		Monitor planeta = new Monitor();
 		planeta.setNazwa(nazwa1);
 		planeta.setSrednica(srednica1);
 		planeta.setIl_ks(il_ks1);
 		managerPlanety.addPlaneta(planeta);
 		
-		List<Planeta> planetyTab = new ArrayList<Planeta>();
+		List<Monitor> planetyTab = new ArrayList<Monitor>();
 		planetyTab.add(planeta);
 		
-		UkladPlanetarny uklad = new UkladPlanetarny();
+		Firma uklad = new Firma();
 		uklad.setNazwaUkladu(nazwaU1);
 		uklad.setLiczbaObiektow(liczbaObiektow1);
 		uklad.setPlanety(planetyTab);
@@ -217,7 +217,7 @@ public class UkladPlanetarnyManagerTest {
 		assertNull(managerPlanety.getPlanetaById(planeta.getId()));
 		assertNull(managerUkladu.getUkladPlanetarnyById(uklad.getId()));
 		
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowPoUsunieciu = listaUkladow2.size();
 		
 		assertEquals(liczbaUkladowprzedDodaniem, liczbaUkladowPoUsunieciu);
@@ -229,12 +229,12 @@ public class UkladPlanetarnyManagerTest {
 	@Test
 	public void findAllUkladyCheck() {
 	
-		Planeta planeta1 = new Planeta();
+		Monitor planeta1 = new Monitor();
 		planeta1.setNazwa(nazwa2);
 		planeta1.setSrednica(srednica2);
 		planeta1.setIl_ks(il_ks2);
 	
-		Planeta planeta2 = new Planeta();
+		Monitor planeta2 = new Monitor();
 		planeta2.setNazwa(nazwa2);
 		planeta2.setSrednica(srednica2);
 		planeta2.setIl_ks(il_ks2);
@@ -242,21 +242,21 @@ public class UkladPlanetarnyManagerTest {
 		managerPlanety.addPlaneta(planeta1);
 		managerPlanety.addPlaneta(planeta2);
 	
-		List<Planeta> planetyTab = new ArrayList<Planeta>();
+		List<Monitor> planetyTab = new ArrayList<Monitor>();
 		planetyTab.add(planeta1);
 		planetyTab.add(planeta2);
 	
-		UkladPlanetarny uklad = new UkladPlanetarny();
+		Firma uklad = new Firma();
 		uklad.setNazwaUkladu(nazwaU2);
 		uklad.setLiczbaObiektow(liczbaObiektow2);
 		uklad.setPlanety(planetyTab);
 
-		List<UkladPlanetarny> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowprzedDodaniem = listaUkladow.size();
 	
 		managerUkladu.addNewUkladPlanetarny(uklad);
 	
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowpoDodaniu = listaUkladow2.size();
 		//assertEquals(liczbaPlanetprzedDodaniem, liczbaPlanetpoDodaniu-2);
 	
@@ -272,15 +272,15 @@ public class UkladPlanetarnyManagerTest {
 	@Test
 	public void editUkladCheck() {
 		
-		List<UkladPlanetarny> listaUkladow1 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow1 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowprzedDodaniem = listaUkladow1.size();
 		
-		Planeta planeta1 = new Planeta();
+		Monitor planeta1 = new Monitor();
 		planeta1.setNazwa(nazwa2);
 		planeta1.setSrednica(srednica2);
 		planeta1.setIl_ks(il_ks2);
 		
-		Planeta planeta2 = new Planeta();
+		Monitor planeta2 = new Monitor();
 		planeta2.setNazwa(nazwa2);
 		planeta2.setSrednica(srednica2);
 		planeta2.setIl_ks(il_ks2);
@@ -288,26 +288,26 @@ public class UkladPlanetarnyManagerTest {
 		managerPlanety.addPlaneta(planeta1);
 		managerPlanety.addPlaneta(planeta2);
 		
-		List<Planeta> planetyTab1 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab1 = new ArrayList<Monitor>();
 		planetyTab1.add(planeta1);
 		
-		UkladPlanetarny uklad1 = new UkladPlanetarny();
+		Firma uklad1 = new Firma();
 		uklad1.setNazwaUkladu(nazwaU1);
 		uklad1.setLiczbaObiektow(liczbaObiektow1);
 		uklad1.setPlanety(planetyTab1);
 		managerUkladu.addNewUkladPlanetarny(uklad1);
 		
-		List<Planeta> planetyTab2 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab2 = new ArrayList<Monitor>();
 		planetyTab2.add(planeta2);
 		
-		UkladPlanetarny uklad2 = new UkladPlanetarny();
+		Firma uklad2 = new Firma();
 		uklad2.setNazwaUkladu(nazwaU2);
 		uklad2.setLiczbaObiektow(liczbaObiektow2);
 		uklad2.setPlanety(planetyTab2);
 		managerUkladu.addNewUkladPlanetarny(uklad2);
 
 		
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowpoDodaniu = listaUkladow2.size();
 		assertEquals(liczbaUkladowprzedDodaniem+2, liczbaUkladowpoDodaniu);
 		
@@ -319,7 +319,7 @@ public class UkladPlanetarnyManagerTest {
 		
 		ObjectId idUkladu = uklad2.getId();
 		
-		UkladPlanetarny uk = managerUkladu.getUkladPlanetarnyById(idUkladu);
+		Firma uk = managerUkladu.getUkladPlanetarnyById(idUkladu);
 		
 		assertEquals(nazwa1, uk.getNazwaUkladu());
 		assertEquals(liczbaObiektow1, uk.getLiczbaObiektow());
@@ -332,19 +332,19 @@ public class UkladPlanetarnyManagerTest {
 	@Test
 	public void findUkladByLiczbaObiektow() {
 		
-		List<UkladPlanetarny> listaUkladow1 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow1 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowprzedDodaniem = listaUkladow1.size();
 		
-		Planeta planeta = new Planeta();
+		Monitor planeta = new Monitor();
 		planeta.setNazwa(nazwa1);
 		planeta.setSrednica(SrednicaUnique);
 		planeta.setIl_ks(il_ks1);		
 		managerPlanety.addPlaneta(planeta);
 		
-		List<Planeta> planetyTab1 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab1 = new ArrayList<Monitor>();
 		planetyTab1.add(planeta);
 		
-		UkladPlanetarny uklad1 = new UkladPlanetarny();
+		Firma uklad1 = new Firma();
 		uklad1.setNazwaUkladu(nazwaU1);
 		uklad1.setLiczbaObiektow(liczbaObiektowUnique);
 		uklad1.setPlanety(planetyTab1);
@@ -354,14 +354,14 @@ public class UkladPlanetarnyManagerTest {
 		assertNotNull(managerPlanety.getPlanetaById(planeta.getId()));
 		assertNotNull(managerUkladu.getUkladPlanetarnyById(uklad1.getId()));
 		
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowpoDodaniu = listaUkladow2.size();
 		
 		assertEquals(liczbaUkladowpoDodaniu, liczbaUkladowprzedDodaniem+1);
 		
 		assertNotNull(managerUkladu.getUkladyPlanetarneByLiczbaObiektow(uklad1.getLiczbaObiektow()));
-		List<UkladPlanetarny> uk = managerUkladu.getUkladyPlanetarneByLiczbaObiektow(uklad1.getLiczbaObiektow());
-		UkladPlanetarny uk2 = uk.get(0);
+		List<Firma> uk = managerUkladu.getUkladyPlanetarneByLiczbaObiektow(uklad1.getLiczbaObiektow());
+		Firma uk2 = uk.get(0);
 		assertEquals(liczbaObiektowUnique, uk2.getLiczbaObiektow());
 		
 		managerUkladu.deleteAllUkladyPlanetarne();
@@ -369,12 +369,12 @@ public class UkladPlanetarnyManagerTest {
 	
 	@Test
 	public void checkPobranieWszystkichObiektowZUkladu() {
-		Planeta planeta1 = new Planeta();
+		Monitor planeta1 = new Monitor();
 		planeta1.setNazwa(nazwa1);
 		planeta1.setSrednica(srednica1);
 		planeta1.setIl_ks(il_ks1);
 		
-		Planeta planeta2 = new Planeta();
+		Monitor planeta2 = new Monitor();
 		planeta2.setNazwa(nazwa2);
 		planeta2.setSrednica(srednica2);
 		planeta2.setIl_ks(il_ks2);
@@ -382,23 +382,23 @@ public class UkladPlanetarnyManagerTest {
 		managerPlanety.addPlaneta(planeta1);
 		managerPlanety.addPlaneta(planeta2);
 		
-		List<Planeta> planetyTab1 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab1 = new ArrayList<Monitor>();
 		planetyTab1.add(planeta1);
 		planetyTab1.add(planeta2);
 		
-		UkladPlanetarny uklad1 = new UkladPlanetarny();
+		Firma uklad1 = new Firma();
 		uklad1.setNazwaUkladu(nazwaU1);
 		uklad1.setLiczbaObiektow(liczbaObiektow1);
 		uklad1.setPlanety(planetyTab1);
 		managerUkladu.addNewUkladPlanetarny(uklad1);
 		
-		List<Planeta> listaPlanetUkladu = managerUkladu.getPlanetyInUklad(uklad1);
+		List<Monitor> listaPlanetUkladu = managerUkladu.getPlanetyInUklad(uklad1);
 		assertNotNull(listaPlanetUkladu);
 		
 		assertEquals(listaPlanetUkladu.size(), 2);
 		
-		Planeta pl1 = listaPlanetUkladu.get(0);
-		Planeta pl2 = listaPlanetUkladu.get(1);
+		Monitor pl1 = listaPlanetUkladu.get(0);
+		Monitor pl2 = listaPlanetUkladu.get(1);
 		
 		assertEquals(pl1.getNazwa(), nazwa1);
 		assertEquals(pl1.getSrednica(), srednica1);
@@ -414,15 +414,15 @@ public class UkladPlanetarnyManagerTest {
 	
 	@Test
 	public void getUkladPlanetarnyByNazwaLiczbaObiektowCheck() {
-		List<UkladPlanetarny> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowPrzedDodaniem = listaUkladow.size();
 		
-		Planeta planeta1 = new Planeta();
+		Monitor planeta1 = new Monitor();
 		planeta1.setNazwa(nazwa1);
 		planeta1.setSrednica(srednica1);
 		planeta1.setIl_ks(il_ks1);
 	
-		Planeta planeta2 = new Planeta();
+		Monitor planeta2 = new Monitor();
 		planeta2.setNazwa(nazwa2);
 		planeta2.setSrednica(srednica2);
 		planeta2.setIl_ks(il_ks2);
@@ -430,46 +430,46 @@ public class UkladPlanetarnyManagerTest {
 		managerPlanety.addPlaneta(planeta1);
 		managerPlanety.addPlaneta(planeta2);
 		
-		List<Planeta> planetyTab1 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab1 = new ArrayList<Monitor>();
 		planetyTab1.add(planeta1);
 		
-		List<Planeta> planetyTab2 = new ArrayList<Planeta>();
+		List<Monitor> planetyTab2 = new ArrayList<Monitor>();
 		planetyTab1.add(planeta2);
 		
-		UkladPlanetarny uklad1 = new UkladPlanetarny();
+		Firma uklad1 = new Firma();
 		uklad1.setNazwaUkladu(nazwaU1);
 		uklad1.setLiczbaObiektow(liczbaObiektow1);
 		uklad1.setPlanety(planetyTab1);
 		managerUkladu.addNewUkladPlanetarny(uklad1);
 		
-		UkladPlanetarny uklad2 = new UkladPlanetarny();
+		Firma uklad2 = new Firma();
 		uklad2.setNazwaUkladu(nazwaUkladuUnique);
 		uklad2.setLiczbaObiektow(liczbaObiektowUnique);
 		uklad2.setPlanety(planetyTab2);
 		managerUkladu.addNewUkladPlanetarny(uklad2);
 	
-		List<UkladPlanetarny> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
+		List<Firma> listaUkladow2 = managerUkladu.getAllUkladyPlanetarne();
 		int liczbaUkladowPoDodaniu = listaUkladow2.size();
 	
 		assertEquals(liczbaUkladowPoDodaniu, liczbaUkladowPrzedDodaniem+2);
 		
 		assertNotNull(managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaUkladuUnique, liczbaObiektowUnique));
-		List<UkladPlanetarny> pl1 = managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaUkladuUnique, liczbaObiektowUnique);
+		List<Firma> pl1 = managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaUkladuUnique, liczbaObiektowUnique);
 		int length1 = pl1.size();
 		assertEquals(1, length1);
 		
-		UkladPlanetarny uklad3 = new UkladPlanetarny();
+		Firma uklad3 = new Firma();
 		uklad3.setNazwaUkladu(nazwaUkladuUnique);
 		uklad3.setLiczbaObiektow(liczbaObiektowUnique);
 		uklad3.setPlanety(planetyTab2);
 		managerUkladu.addNewUkladPlanetarny(uklad3);
 		
 		assertNotNull(managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaUkladuUnique, liczbaObiektowUnique));
-		List<UkladPlanetarny> pl2 = managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaUkladuUnique, liczbaObiektowUnique);
+		List<Firma> pl2 = managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaUkladuUnique, liczbaObiektowUnique);
 		int length2 = pl2.size();
 		assertEquals(2, length2);
 		
-		List<UkladPlanetarny> pl3 = managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaU1, liczbaObiektowUnique);
+		List<Firma> pl3 = managerUkladu.getUkladPlanetarnyByNazwaLiczbaObiektow(nazwaU1, liczbaObiektowUnique);
 		int length3 = pl3.size();
 		assertEquals(0, length3);
 		
