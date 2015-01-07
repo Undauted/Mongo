@@ -61,5 +61,15 @@ public class FirmaManager {
 		return monitor;
 	}
 	
+	public void deleteMonitorZfirmyBywaga(Firma firma, int temp){
+		for (Monitor monitor : firma.getMonitory()) 
+		{
+			if(monitor.getWaga() == temp)
+			{
+				monitorRepository.delete(monitor);
+			}
+		}
+		}
+	
 	
 }

@@ -51,6 +51,8 @@ public class Testy {
 	private final String szef1 = "KOWALSKI";
 	private final String szef2 = "NOWAK";
 	
+	private final int temp = 2;
+	
 	
 //-----------------DODAWANIE MONITORA I FIRMY-----------------------------------
 	
@@ -78,6 +80,8 @@ public class Testy {
 		assertEquals(rodzaj1,mo.getRodzaj());
 		assertEquals(przekatna1,mo.getPrzekatna());
 		assertEquals(waga1,mo.getWaga());
+		
+		managerMonitor.deleteAllMonitory();
 		
 	}
 	
@@ -117,7 +121,7 @@ public class Testy {
 		assertEquals(szef1,fir1.getSzef());
 		assertEquals(monit.size(),fir1.getMonitory().size());
 		
-		
+		managerFirmy.deleteAllFirma();
 		
 	}
 	
@@ -143,6 +147,8 @@ public class Testy {
 		
 		
 		assertNull(managerMonitor.getMonitorById(monitor.getId()));
+		
+		managerMonitor.deleteAllMonitory();
 	
 	}
 	
@@ -181,7 +187,7 @@ public class Testy {
 		
 		assertNull(managerMonitor.getMonitorById(monitor.getId()));
 		
-		
+		managerFirmy.deleteAllFirma();
 	}
 	
 	
@@ -214,6 +220,8 @@ public class Testy {
 		
 		List<Monitor> monit1 = managerMonitor.getAllMonitory();
 		assertNull(monit1.size());
+		
+		managerMonitor.deleteAllMonitory();
 	}
 	
 	@Test
@@ -266,6 +274,8 @@ public class Testy {
 		List<Firma> fir1 = managerFirmy.getAllFirma();
 		assertEquals(fir1.size(),0);
 		assertNull(fir1.size());
+		
+		managerFirmy.deleteAllFirma();
 	}
 	
 //------------------SZUKANIE MONITORÓW I FIRM PO ID---------------------------
@@ -288,6 +298,8 @@ public class Testy {
 		List<Monitor> monit = managerMonitor.getAllMonitory();
 		
 		assertNull(monit.size());
+		
+		managerMonitor.deleteAllMonitory();
 		
 	}
 	
@@ -326,6 +338,8 @@ public class Testy {
 		List<Firma> fir = managerFirmy.getAllFirma();
 
 		assertEquals(fir.size(),0);
+		
+		managerFirmy.deleteAllFirma();
 	}
 	
 //------------SZUKANIE WSZYSTKICH MONITORÓW I FIRM-------------------------------------------------	
@@ -347,10 +361,12 @@ public class Testy {
 		List<Monitor> monit1 = managerMonitor.getAllMonitory();
 		assertNotNull(monit1.size());
 		assertEquals(1,monit1.size());
+		
+		managerMonitor.deleteAllMonitory();
 	}
 	
 	@Test
-	public void findAllUkladyCheck() {
+	public void findAllFirmyCheck() {
 	
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(nazwa1);
@@ -395,7 +411,7 @@ public class Testy {
 		assertNotSame(fir.size(), 1);
 		assertNotNull(fir.size());
 	
-		
+		managerFirmy.deleteAllFirma();
 	}
 	
 
@@ -438,11 +454,11 @@ public class Testy {
 		assertNotSame(rodzaj1,monitor1.getNazwa());
 		assertNotSame(nazwa1,monitor1.getRodzaj());
 		
-		
+		managerMonitor.deleteAllMonitory();
 	}
 	
 	@Test
-	public void editUkladCheck() {
+	public void editFirmaCheck() {
 		
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(nazwa1);
@@ -503,7 +519,7 @@ public class Testy {
 		assertNotSame(szef1,firma1.getMarka());
 		assertNotSame(marka1,firma1.getSzef());
 		
-		
+		managerFirmy.deleteAllFirma();
 		
 	}
 //-------------------SZUKANIE PO CZYMŚ-------------------------------------	
@@ -526,7 +542,7 @@ public class Testy {
 		Monitor mo = monit.get(0);
 		assertEquals(waga1, mo.getWaga());
 		
-	
+		managerMonitor.deleteAllMonitory();
 	}
 	
 	@Test
@@ -566,6 +582,7 @@ public class Testy {
 		Firma firmo = fir1.get(0);
 		assertEquals(regon1, firmo.getRegon());
 		
+		managerFirmy.deleteAllFirma();
 		
 	}
 //------------WYRAŻENIA REGULARNE-----------------------------------------------------
@@ -600,6 +617,7 @@ public class Testy {
 		
 		assertEquals(monit2.size(),0);
 		
+		managerMonitor.deleteAllMonitory();
 		
 	}
 	
@@ -641,6 +659,8 @@ public class Testy {
 		List<Firma> fir2 = managerFirmy.getFirmaByMarkaRegon(marka1, regon2);
 		
 		assertEquals(fir2.size(),0);
+		
+		managerFirmy.deleteAllFirma();
 	}
 	
 //------------------SZUKANIE MONITORÓW NALEŻĄCYCH DO FIRM----------------------------
@@ -695,6 +715,47 @@ public class Testy {
 		assertEquals(mo2.getWaga(), waga2);
 		
 	
+		managerFirmy.deleteAllFirma();
+	}
+	
+	@Test
+	public void deletePlanetyInUkladBySrednicaCheck() {
+		
+		Monitor monitor = new Monitor();
+		monitor.setNazwa(nazwa1);
+		monitor.setRodzaj(rodzaj1);
+		monitor.setPrzekatna(przekatna1);
+		monitor.setWaga(waga1);
+		
+		managerMonitor.addMonitor(monitor);
+
+		Monitor monitor1 = new Monitor();
+		monitor1.setNazwa(nazwa2);
+		monitor1.setRodzaj(rodzaj2);
+		monitor1.setPrzekatna(przekatna2);
+		monitor1.setWaga(waga2);
+	
+		managerMonitor.addMonitor(monitor1);
+		
+		List<Monitor> monit = new ArrayList<Monitor>();
+		monit.add(monitor);
+		monit.add(monitor1);
+		
+		Firma firma = new Firma();
+		firma.setMarka(marka1);
+		firma.setRegon(regon1);
+		firma.setSzef(szef1);
+		firma.setMonitory(monit);
+
+		managerFirmy.addFirma(firma);
+			
+		List<Monitor> lista = managerFirmy.getMonitorFirmy(firma);
+		assertNotNull(lista);
+		managerFirmy.deleteMonitorZfirmyBywaga(firma, temp);
+		assertNotNull(managerMonitor.getMonitorById(monitor1.getId()));
+		assertNull(managerMonitor.getMonitorById(monitor.getId()));
+		
+		managerFirmy.deleteAllFirma();
 	}
 	
 	
