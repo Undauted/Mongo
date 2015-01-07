@@ -208,10 +208,11 @@ public class Testy {
 		monitor1.setPrzekatna(przekatna2);
 		monitor1.setWaga(waga2);
 	
-		List<Monitor> monit = managerMonitor.getAllMonitory();
+		
 		managerMonitor.addMonitor(monitor);
 		managerMonitor.addMonitor(monitor1);
 	
+		List<Monitor> monit = managerMonitor.getAllMonitory();
 		assertEquals(monit.size(),2);
 		
 		
@@ -415,6 +416,7 @@ public class Testy {
 	@Test
 	public void checkUpdateMonitor() {
 		
+		managerMonitor.deleteAllMonitory();
 		
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(nazwa1);
@@ -585,6 +587,8 @@ public class Testy {
 	
 	@Test
 	public void checkznajdzMonitor() {
+		
+		managerMonitor.deleteAllMonitory();
 		
 		Monitor monitor = new Monitor();
 		monitor.setNazwa(nazwa1);
